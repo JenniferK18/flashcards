@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   Text,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addDeck } from '../actions';
@@ -15,16 +16,17 @@ class NewDeck extends Component {
 
   updateInput = (input) => {
     this.setState({
-      input
+      deckName: input
     });
   }
 
   submitDeck = () => {
     const { dispatch } = this.props;
-    dispatch.addDeck({
+    const { deckName } = this.state;
+    dispatch(addDeck({
       deckName,
       cards: [],
-    });
+    }));
 
     //TODO: redirect to the DeckView for this deck
   }
@@ -37,7 +39,7 @@ class NewDeck extends Component {
         <Text>Question: </Text>
         <TextInput
           value={deckName}
-          onChangeText={this.updateInput}
+          onChange={this.updateInput}
         />
         <TouchableOpacity
           onPress={this.submitDeck}

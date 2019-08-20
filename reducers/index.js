@@ -1,6 +1,7 @@
 import { RECEIVE_DECKS, ADD_DECK, ADD_QUESTION } from '../actions'
 
 function decks(state = {}, action) {
+  // console.log(JSON.stringify(state))
   switch (action.type) {
     case RECEIVE_DECKS:
       return {
@@ -17,7 +18,7 @@ function decks(state = {}, action) {
         ...state,
         [action.deckName]: {
           ...state[action.deckName],
-          cards: cards.concat(action.question)
+          cards: state[action.deckName].cards.concat(action.question)
         }
       }
     default :

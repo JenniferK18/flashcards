@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import {
+  View,
   Text,
   FlatList
 } from 'react-native';
@@ -18,7 +19,9 @@ const data = [
   }
 ];
 
-const DeckList = () => {
+const DeckList = ({
+  decks
+}) => {
 
   renderItem = ({ item }) => {
     return <Deck { ...item } />;
@@ -39,7 +42,7 @@ const DeckList = () => {
 };
 
 function mapStateToProps (decks) {
-  return { decks };
+  return decks;
 }
 
 export default connect(mapStateToProps)(DeckList);

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   Text,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TouchableOpacity
 } from 'react-native';
 import { addQuestion } from '../actions';
 import { connect } from 'react-redux';
@@ -25,10 +26,21 @@ class NewQuestion extends Component {
     }));
   }
 
-  updateInput = (input) => {
-    this.setState({
-      input
-    });
+  updateInput = (input, type) => {
+    type === 'question' ?
+    this.setState((prevState) => ({
+      question: {
+        ...prevState.question,
+        question: input
+      }
+    }))
+    : 
+    this.setState((prevState) => ({
+      question: {
+        ...prevState.question,
+        answer: input
+      }
+    }))
   }
 
   render() {
@@ -39,12 +51,12 @@ class NewQuestion extends Component {
         <Text>Question: </Text>
         <TextInput
           value={question}
-          onChangeText={this.updateInput}
+          onChangeText={(input) => this.updateInput(input, 'question')}
         />
         <Text>Answer: </Text>
         <TextInput
           value={answer}
-          onChangeText={this.updateInput}
+          onChangeText={(input) => this.updateInput(input, 'answer')}
         />
         <TouchableOpacity
           onPress={this.submitQuestion}
