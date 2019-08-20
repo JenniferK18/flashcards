@@ -18,12 +18,14 @@ class NewQuestion extends Component {
   }
 
   submitQuestion = () => {
-    const { deckName, dispatch } = this.props;
+    const { navigation, dispatch } = this.props;
     const { question } = this.state;
+    const deckName = navigation.getParam('deckName')
     dispatch(addQuestion({
       deckName,
       question
     }));
+    navigation.navigate('DeckView', { deckName })
   }
 
   updateInput = (input, type) => {
@@ -45,7 +47,6 @@ class NewQuestion extends Component {
 
   render() {
     const { question, answer } = this.state.question;
-
     return (
       <KeyboardAvoidingView behavior='padding'>
         <Text>Question: </Text>
@@ -67,6 +68,5 @@ class NewQuestion extends Component {
     );
   }
 };
-
 
 export default connect()(NewQuestion);

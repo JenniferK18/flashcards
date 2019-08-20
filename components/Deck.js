@@ -1,15 +1,15 @@
 import React from 'react'
 import {
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native'
 
 const Deck = ({
-  deckName, cards
+  deckName, cards, navigation
 }) => {
 
   toDeckView = () => {
-    // TODO: redirect to DeckView with animation
+    navigation.navigate('DeckView', { deckName })
   }
 
   return (

@@ -21,14 +21,14 @@ class NewDeck extends Component {
   }
 
   submitDeck = () => {
-    const { dispatch } = this.props;
+    const { dispatch, navigation } = this.props;
     const { deckName } = this.state;
     dispatch(addDeck({
       deckName,
       cards: [],
     }));
 
-    //TODO: redirect to the DeckView for this deck
+    navigation.navigate('DeckView', { deckName })
   }
 
   render() {

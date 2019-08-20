@@ -1,37 +1,58 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
-  View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Animated
 } from 'react-native'
 
-const DeckView = ({
-  deckName, cards
-}) => {
+class DeckView extends Component {
+
+  state = {
+    fade: new Animated.Value(0),
+  }
+
+  componentDidMount() {
+    const { fade } = this.state
+    Animated.timing(fade, { toValue: 1,  duration: 3000 }).start();
+  }
 
   addQuestion = () => {
-    // TODO: redirect to NewQuestion component, sending in deckName
+    const { navigation } = this.props
+    navigation.navigate('NewQuestion', { deckName })
   }
 
   startQuiz = () => {
-    // TODO: redirect to QuizView component, sending in deckName
+    const { navigation } = this.props
+    navigation.navigate('QuizView', { deckName })
   }
 
-  return (
-    <View>
-      <Text>{deckName} - {cards.length} cards</Text>
-      <TouchableOpacity
-        onPress={this.addQuestion}
-      >
-        <Text>Add Question</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={this.startQuiz}
-      >
-        <Text>Start Quiz</Text>
-      </TouchableOpacity>
-    </View>
-  )
+  render() {
+    const { deckName, cards } = this.props
+    const { fade } = this.state
+    return (
+      <Animated.View style={{ opacity: fade }}>
+        <Text>{deckName} - {cards.length} cards</Text>
+        <TouchableOpacity
+          onPress={this.addQuestion}
+        >
+          <Text>Add Question</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.startQuiz}
+        >
+          <Text>Start Quiz</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    )
+  }
 }
 
-export default DeckView
+function mapStateToProps (state, { navigation }) {
+  const deckName = navigation.getParam('deckName')
+  return {
+    cards: state[deckName].cards,
+    deckName
+  }
+}
+
+export default connect(mapStateToProps)(DeckView)

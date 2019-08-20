@@ -2,7 +2,8 @@ import React, {Fragment} from 'react';
 import {
   View,
   Text,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 import Deck from './Deck';
 import { connect } from 'react-redux';
@@ -11,17 +12,18 @@ const data = [
   {
     deckName: 'test',
     cards: [
-      {
-        question: 'question',
-        answer: 'answer',
-      }
+      { question: 'question', answer: 'answer' }
     ]
   }
 ];
 
 const DeckList = ({
-  decks
+  decks, navigation
 }) => {
+
+  toNewDeck = () => {
+    navigation.navigate('NewDeck')
+  }
 
   renderItem = ({ item }) => {
     return <Deck { ...item } />;
@@ -29,6 +31,11 @@ const DeckList = ({
 
   return (
     <Fragment>
+      <TouchableOpacity
+        onPress={this.toNewDeck}
+      >
+        <Text>Create a New Deck</Text>
+      </TouchableOpacity>
       <Text>Your Decklist</Text>
       <View>
         <FlatList
@@ -36,7 +43,6 @@ const DeckList = ({
           renderItem={this.renderItem}
         />
       </View>
-
     </Fragment>
   );
 };

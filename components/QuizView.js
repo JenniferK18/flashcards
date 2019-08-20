@@ -43,12 +43,13 @@ class QuizView extends Component {
   }
 
   toDeckView = () => {
-    // TODO: redirect to DeckView
+    const { deckName } = this.props 
+    navigation.navigate('DeckView', { deckName })
   }
 
   render() {
     const { question, correctAnswers } = this.state
-    const { deckName, cards } = this.props
+    const { cards } = this.props
     return (
       <View>
         { !quizCompleted ?
@@ -76,9 +77,11 @@ class QuizView extends Component {
   }
 }
 
-function mapStateToProps (state, { deckName }) {
+function mapStateToProps (state, { navigation }) {
+  const deckName = navigation.getParam('deckName')
   return {
-    cards: state[deckName].cards
+    cards: state[deckName].cards,
+    deckName
   }
 }
 

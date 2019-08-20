@@ -9,6 +9,28 @@ import DeckView from './components/DeckView'
 import Card from './components/Card'
 import reducer from './reducers'
 import { setLocalNotification } from './utils'
+import { createStackNavigator } from 'react-navigation';
+
+const Stack = createStackNavigator({
+  DeckView: {
+    screen: DeckView
+  },
+  DeckList: {
+    screen: DeckList
+  },
+  Deck: {
+    screen: Deck
+  },
+  NewDeck: {
+    screen: NewDeck
+  },
+  QuizView: {
+    screen: QuizView
+  },
+  NewQuestion: {
+    screen: NewQuestion
+  },
+})
 
 const data = [
   {
@@ -30,13 +52,11 @@ class App extends Component {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{ flex: 1 }}>
-          <Card info={data} onAnswer={() => console.log('answered')} />
+          <Stack />
         </View>
       </Provider>
     )
   }
 }
-
-
 
 export default App
