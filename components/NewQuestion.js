@@ -21,10 +21,7 @@ class NewQuestion extends Component {
     const { navigation, dispatch } = this.props;
     const { question } = this.state;
     const deckName = navigation.getParam('deckName')
-    dispatch(addQuestion({
-      deckName,
-      question
-    }));
+    dispatch(addQuestion(deckName, question));
     navigation.navigate('DeckView', { deckName })
   }
 

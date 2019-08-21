@@ -29,24 +29,24 @@ class Card extends Component {
             <Text>View Answer</Text>
           </TouchableOpacity>
         ) : (
-            <View>
-              <Text>Answer: {info.answer}</Text>
-              <TouchableOpacity
-                onPress={onAnswer('correct')}
-              >
-                <Text>Correct</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={onAnswer('incorrect')}
-              >
-                <Text>Incorrect</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={nextQuestion}
-              >
-                <Text>Next Question</Text>
-              </TouchableOpacity>
-            </View>
+          <View>
+            <Text>Answer: {info.answer}</Text>
+            <TouchableOpacity
+              onPress={() => onAnswer('correct')}
+            >
+              <Text>Correct</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => onAnswer('incorrect')}
+            >
+              <Text>Incorrect</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={nextQuestion}
+            >
+              <Text>Next Question</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     )

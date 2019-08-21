@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { clearLocalNotification, setLocalNotification } from '../utils'
+import Card from './Card'
 
 class QuizView extends Component {
 
@@ -16,6 +17,7 @@ class QuizView extends Component {
   }
   
   nextQuestion = () => {
+    const { cards } = this.props
     this.setState((prevState) => {
       if(prevState.question + 1 > cards.length)
         return { question: prevState.question + 1 }
@@ -48,16 +50,16 @@ class QuizView extends Component {
   }
 
   render() {
-    const { question, correctAnswers } = this.state
+    const { question, correctAnswers, quizCompleted } = this.state
     const { cards } = this.props
     return (
       <View>
         { !quizCompleted ?
           <View>
-            <Text>{cards.length - question} questions remaining</Text>
-            <Card info={cards[question]} nextQuestion={this.nextQuestion} onAnswer={this.markAnswer}/>
+            <Text>{cards && cards.length - question} question(s) remaining</Text>
+            <Card info={cards && cards[question]} nextQuestion={this.nextQuestion} onAnswer={this.markAnswer}/>
           </View>
-          : 
+        : 
           <View>
             <Text>Score: {correctAnswers} / {cards.length} </Text>
             <TouchableOpacity
@@ -79,10 +81,13 @@ class QuizView extends Component {
 
 function mapStateToProps (state, { navigation }) {
   const deckName = navigation.getParam('deckName')
-  return {
-    cards: state[deckName].cards,
-    deckName
+  if(deckName) {
+    return {
+      cards: state[deckName].cards,
+      deckName
+    }
   }
+  else return {}
 }
 
 export default connect(mapStateToProps)(QuizView)

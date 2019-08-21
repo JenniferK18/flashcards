@@ -3,20 +3,22 @@ import { View } from 'react-native'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import DeckList from './components/DeckList'
+import Deck from './components/Deck'
 import NewDeck from './components/NewDeck'
 import NewQuestion from './components/NewQuestion'
 import DeckView from './components/DeckView'
-import Card from './components/Card'
+import QuizView from './components/QuizView'
 import reducer from './reducers'
 import { setLocalNotification } from './utils'
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 const Stack = createStackNavigator({
-  DeckView: {
-    screen: DeckView
-  },
+  
   DeckList: {
     screen: DeckList
+  },
+  DeckView: {
+    screen: DeckView
   },
   Deck: {
     screen: Deck
@@ -31,6 +33,8 @@ const Stack = createStackNavigator({
     screen: NewQuestion
   },
 })
+
+const AppContainer = createAppContainer(Stack);
 
 const data = [
   {
@@ -52,11 +56,11 @@ class App extends Component {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{ flex: 1 }}>
-          <Stack />
+          <AppContainer />
         </View>
       </Provider>
     )
   }
 }
 
-export default App
+export default App;

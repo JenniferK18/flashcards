@@ -1,7 +1,11 @@
 import { RECEIVE_DECKS, ADD_DECK, ADD_QUESTION } from '../actions'
 
 function decks(state = {}, action) {
-  // console.log(JSON.stringify(state))
+  //console.log('state: ', JSON.stringify(state))
+  //console.log('action: ', JSON.stringify(action))
+
+  //console.log('action.deckName: ', JSON.stringify(action.deckName))
+  //console.log('state[action.deckName]: ', JSON.stringify(state[action.deckName]))
   switch (action.type) {
     case RECEIVE_DECKS:
       return {
@@ -24,6 +28,7 @@ function decks(state = {}, action) {
     default :
       return state
   }
+
 }
 
 export default decks

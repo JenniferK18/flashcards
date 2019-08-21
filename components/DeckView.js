@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import {
   Text,
   TouchableOpacity,
@@ -17,12 +18,12 @@ class DeckView extends Component {
   }
 
   addQuestion = () => {
-    const { navigation } = this.props
+    const { navigation, deckName } = this.props
     navigation.navigate('NewQuestion', { deckName })
   }
 
   startQuiz = () => {
-    const { navigation } = this.props
+    const { navigation, deckName } = this.props
     navigation.navigate('QuizView', { deckName })
   }
 
@@ -31,7 +32,7 @@ class DeckView extends Component {
     const { fade } = this.state
     return (
       <Animated.View style={{ opacity: fade }}>
-        <Text>{deckName} - {cards.length} cards</Text>
+        {cards && <Text>{deckName} - {cards.length} cards</Text>}
         <TouchableOpacity
           onPress={this.addQuestion}
         >
@@ -49,10 +50,13 @@ class DeckView extends Component {
 
 function mapStateToProps (state, { navigation }) {
   const deckName = navigation.getParam('deckName')
-  return {
-    cards: state[deckName].cards,
-    deckName
+  if (deckName) {
+    return {
+      cards: state[deckName].cards,
+      deckName
+    }
   }
+  else return {}
 }
 
 export default connect(mapStateToProps)(DeckView)

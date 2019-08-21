@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment, Component } from 'react';
 import {
   View,
   Text,
@@ -6,22 +6,18 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Deck from './Deck';
+import { receiveDecks } from '../actions'
 import { connect } from 'react-redux';
 
-const data = [
-  {
-    deckName: 'test',
-    cards: [
-      { question: 'question', answer: 'answer' }
-    ]
-  }
-];
+class DeckList extends Component {
 
-const DeckList = ({
-  decks, navigation
-}) => {
+  componentWillMount() {
+    const { dispatch } = this.props
+    dispatch(receiveDecks())
+  }
 
   toNewDeck = () => {
+    const { navigation } = this.props
     navigation.navigate('NewDeck')
   }
 
@@ -29,22 +25,25 @@ const DeckList = ({
     return <Deck { ...item } />;
   };
 
-  return (
-    <Fragment>
-      <TouchableOpacity
-        onPress={this.toNewDeck}
-      >
-        <Text>Create a New Deck</Text>
-      </TouchableOpacity>
-      <Text>Your Decklist</Text>
-      <View>
-        <FlatList
-          data={decks}
-          renderItem={this.renderItem}
-        />
-      </View>
-    </Fragment>
-  );
+  render() {
+    const { decks } = this.props
+    return (
+      <Fragment>
+        <TouchableOpacity
+          onPress={this.toNewDeck}
+        >
+          <Text>Create a New Deck</Text>
+        </TouchableOpacity>
+        <Text>Your Decklist</Text>
+        <View>
+          <FlatList
+            data={decks}
+            renderItem={this.renderItem}
+          />
+        </View>
+      </Fragment>
+    );
+  }
 };
 
 function mapStateToProps (decks) {

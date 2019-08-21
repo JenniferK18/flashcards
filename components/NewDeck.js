@@ -24,10 +24,8 @@ class NewDeck extends Component {
     const { dispatch, navigation } = this.props;
     const { deckName } = this.state;
     dispatch(addDeck({
-      deckName,
-      cards: [],
+      [deckName]: { cards: [], }
     }));
-
     navigation.navigate('DeckView', { deckName })
   }
 
@@ -36,10 +34,10 @@ class NewDeck extends Component {
 
     return (
       <KeyboardAvoidingView behavior='padding'>
-        <Text>Question: </Text>
+        <Text>Enter Your New Deck Name: </Text>
         <TextInput
           value={deckName}
-          onChange={this.updateInput}
+          onChangeText={this.updateInput}
         />
         <TouchableOpacity
           onPress={this.submitDeck}
