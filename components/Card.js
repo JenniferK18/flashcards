@@ -8,6 +8,18 @@ import {
 class Card extends Component {
   state = {
     viewAnswer: false,
+    markedAnswer: false,
+    markedError: false,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.info !== this.props.info) {
+      this.setState({
+        viewAnswer: false,
+        markedAnswer: false,
+        markedError: false,
+      })
+    }
   }
 
   viewAnswer = () => {
@@ -16,9 +28,25 @@ class Card extends Component {
     })
   }
 
+  markAnswer = (answer) => {
+    const { markedAnswer } = this.state
+    const { onAnswer } = this.props
+    if(!markedAnswer) {
+      this.setState({
+        markedAnswer: true
+      })
+      onAnswer(answer)
+    }
+    else {
+      this.setState({
+        markedError: true
+      })
+    }
+  }
+
   render() { 
-    const { info, nextQuestion, onAnswer } = this.props
-    const { viewAnswer } = this.state
+    const { info, nextQuestion } = this.props
+    const { viewAnswer, markedError } = this.state
     return (
       <View>
         <Text>Question: {info.question}</Text>
@@ -32,12 +60,12 @@ class Card extends Component {
           <View>
             <Text>Answer: {info.answer}</Text>
             <TouchableOpacity
-              onPress={() => onAnswer('correct')}
+              onPress={() => this.markAnswer('correct')}
             >
               <Text>Correct</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => onAnswer('incorrect')}
+              onPress={() => this.markAnswer('incorrect')}
             >
               <Text>Incorrect</Text>
             </TouchableOpacity>
@@ -46,6 +74,7 @@ class Card extends Component {
             >
               <Text>Next Question</Text>
             </TouchableOpacity>
+            { markedError && <Text>You have already marked this question's answer.</Text> }
           </View>
         )}
       </View>

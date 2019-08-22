@@ -50,11 +50,11 @@ const data = [
 
 class App extends Component {
   componentDidMount() {
-    setLocalNotification()
+    // setLocalNotification()
   }
   render() {
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={createStore(reducer, { decks: {} })}>
         <View style={{ flex: 1 }}>
           <AppContainer />
         </View>

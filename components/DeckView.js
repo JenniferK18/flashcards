@@ -10,6 +10,7 @@ class DeckView extends Component {
 
   state = {
     fade: new Animated.Value(0),
+    error: false,
   }
 
   componentDidMount() {
@@ -20,16 +21,24 @@ class DeckView extends Component {
   addQuestion = () => {
     const { navigation, deckName } = this.props
     navigation.navigate('NewQuestion', { deckName })
+    this.setState({
+      error: false
+    })
   }
 
   startQuiz = () => {
-    const { navigation, deckName } = this.props
-    navigation.navigate('QuizView', { deckName })
+    const { navigation, deckName, cards } = this.props
+    if(cards.length == 0) {
+      this.setState({
+        error: true
+      })
+    }
+    else navigation.navigate('QuizView', { deckName })
   }
 
   render() {
     const { deckName, cards } = this.props
-    const { fade } = this.state
+    const { fade, error } = this.state
     return (
       <Animated.View style={{ opacity: fade }}>
         {cards && <Text>{deckName} - {cards.length} cards</Text>}
@@ -43,6 +52,7 @@ class DeckView extends Component {
         >
           <Text>Start Quiz</Text>
         </TouchableOpacity>
+        {error && <Text>You have not added any questions to this deck yet.</Text>}
       </Animated.View>
     )
   }
@@ -52,7 +62,7 @@ function mapStateToProps (state, { navigation }) {
   const deckName = navigation.getParam('deckName')
   if (deckName) {
     return {
-      cards: state[deckName].cards,
+      cards: state.decks[deckName].cards,
       deckName
     }
   }

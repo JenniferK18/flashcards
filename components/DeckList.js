@@ -3,11 +3,11 @@ import {
   View,
   Text,
   FlatList,
-  TouchableOpacity
 } from 'react-native';
 import Deck from './Deck';
 import { receiveDecks } from '../actions'
 import { connect } from 'react-redux';
+import StyleButton from './StyleButton'
 
 class DeckList extends Component {
 
@@ -22,22 +22,23 @@ class DeckList extends Component {
   }
 
   renderItem = ({ item }) => {
-    return <Deck { ...item } />;
+    const { navigation } = this.props
+    return <Deck { ...item } navigation={navigation}/>;
   };
 
   render() {
     const { decks } = this.props
+    const dataArr = Object.keys(decks).map((key) => ({ deckName: key, cards: decks[key].cards, key }) )
     return (
       <Fragment>
-        <TouchableOpacity
+        <StyleButton
           onPress={this.toNewDeck}
-        >
-          <Text>Create a New Deck</Text>
-        </TouchableOpacity>
+          text='Create a New Deck'
+        />
         <Text>Your Decklist</Text>
         <View>
           <FlatList
-            data={decks}
+            data={dataArr}
             renderItem={this.renderItem}
           />
         </View>
@@ -46,8 +47,10 @@ class DeckList extends Component {
   }
 };
 
-function mapStateToProps (decks) {
-  return decks;
+function mapStateToProps (state) {
+  return { 
+    decks: state.decks
+  };
 }
 
 export default connect(mapStateToProps)(DeckList);

@@ -16,7 +16,7 @@ const Deck = ({
     <TouchableOpacity
       onPress={this.toDeckView}
     >
-      <Text>{deckName} - {cards.length} cards</Text>
+      <Text>{deckName} - {cards.length} card(s)</Text>
     </TouchableOpacity>
   )
 }

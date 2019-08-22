@@ -19,11 +19,11 @@ class QuizView extends Component {
   nextQuestion = () => {
     const { cards } = this.props
     this.setState((prevState) => {
-      if(prevState.question + 1 > cards.length)
+      if(prevState.question + 1 < cards.length)
         return { question: prevState.question + 1 }
       else {
-        clearLocalNotification()
-          .then(setLocalNotification)
+        //clearLocalNotification()
+        //  .then(setLocalNotification)
         return { quizCompleted: true }
       }
     })
@@ -45,7 +45,7 @@ class QuizView extends Component {
   }
 
   toDeckView = () => {
-    const { deckName } = this.props 
+    const { deckName, navigation } = this.props 
     navigation.navigate('DeckView', { deckName })
   }
 
@@ -83,7 +83,7 @@ function mapStateToProps (state, { navigation }) {
   const deckName = navigation.getParam('deckName')
   if(deckName) {
     return {
-      cards: state[deckName].cards,
+      cards: state.decks[deckName].cards,
       deckName
     }
   }
