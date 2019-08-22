@@ -10,13 +10,23 @@ export function clearLocalNotification () {
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
+function createNotification() {
+  return {
+    title: 'Time to Study',
+    body: 'Don\'t forget to study today!'
+  }
+}
+
 export function setLocalNotification() {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
     .then((data) => {
+      console.log('data: ', data)
       if (data === null) {
         Permissions.askAsync(Permissions.NOTIFICATIONS)
           .then(({ status }) => {
+            console.log('status: ', status)
+
             if (status === 'granted') {
               Notifications.cancelAllScheduledNotificationsAsync()
 

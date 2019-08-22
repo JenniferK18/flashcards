@@ -50,7 +50,7 @@ const data = [
 
 class App extends Component {
   componentDidMount() {
-    // setLocalNotification()
+    setLocalNotification()
   }
   render() {
     return (

@@ -22,8 +22,8 @@ class QuizView extends Component {
       if(prevState.question + 1 < cards.length)
         return { question: prevState.question + 1 }
       else {
-        //clearLocalNotification()
-        //  .then(setLocalNotification)
+        clearLocalNotification()
+          .then(setLocalNotification)
         return { quizCompleted: true }
       }
     })
