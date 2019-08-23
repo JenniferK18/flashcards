@@ -1,8 +1,6 @@
 import { RECEIVE_DECKS, ADD_DECK, ADD_QUESTION } from '../actions'
 
 function decks(state = {}, action) {
-  //console.log('state: ', JSON.stringify(state))
-  //console.log('action: ', JSON.stringify(action))
   switch (action.type) {
     case RECEIVE_DECKS:
       return {
