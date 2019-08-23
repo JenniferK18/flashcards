@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { addQuestion } from '../actions';
 import { connect } from 'react-redux';
+import StyleButton from './StyleButton'
 
 class NewQuestion extends Component {
 
@@ -14,15 +15,25 @@ class NewQuestion extends Component {
     question: {
       question: '',
       answer: '',
-    }
+    },
+    error: false
   }
 
   submitQuestion = () => {
     const { navigation, dispatch } = this.props;
     const { question } = this.state;
     const deckName = navigation.getParam('deckName')
-    dispatch(addQuestion(deckName, question));
-    navigation.navigate('DeckView', { deckName })
+    if (question.question !== '' && question.answer !== '') {
+      dispatch(addQuestion(deckName, question));
+      navigation.navigate('DeckView', { deckName })
+      this.setState({
+        error: false
+      })
+    }
+    else 
+      this.setState({
+        error: true
+      })
   }
 
   updateInput = (input, type) => {
@@ -44,6 +55,7 @@ class NewQuestion extends Component {
 
   render() {
     const { question, answer } = this.state.question;
+    const { error } = this.state
     return (
       <KeyboardAvoidingView behavior='padding'>
         <Text>Question: </Text>
@@ -56,11 +68,11 @@ class NewQuestion extends Component {
           value={answer}
           onChangeText={(input) => this.updateInput(input, 'answer')}
         />
-        <TouchableOpacity
+        <StyleButton
           onPress={this.submitQuestion}
-        >
-          <Text>Submit</Text>
-        </TouchableOpacity>
+          text='Submit'
+        />
+        { error && <Text>You have not entered a valid question and answer yet.</Text>}
       </KeyboardAvoidingView>
     );
   }

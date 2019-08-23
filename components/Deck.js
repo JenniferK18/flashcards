@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  Text,
-  TouchableOpacity,
-} from 'react-native'
+import StyleButton from './StyleButton'
 
 const Deck = ({
   deckName, cards, navigation
@@ -13,11 +10,10 @@ const Deck = ({
   }
 
   return (
-    <TouchableOpacity
+    <StyleButton
       onPress={this.toDeckView}
-    >
-      <Text>{deckName} - {cards.length} card(s)</Text>
-    </TouchableOpacity>
+      text={`${deckName} - ${cards.length} card(s)`}
+    />
   )
 }
 

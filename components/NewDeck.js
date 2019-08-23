@@ -7,11 +7,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addDeck } from '../actions';
+import StyleButton from './StyleButton'
 
 class NewDeck extends Component {
 
   state = {
     deckName: '',
+    error: false,
   }
 
   updateInput = (input) => {
@@ -23,15 +25,23 @@ class NewDeck extends Component {
   submitDeck = () => {
     const { dispatch, navigation } = this.props;
     const { deckName } = this.state;
-    dispatch(addDeck({
-      [deckName]: { cards: [], }
-    }));
-    navigation.navigate('DeckView', { deckName })
+    if(deckName !== '') {
+      dispatch(addDeck({
+        [deckName]: { cards: [], }
+      }));
+      navigation.navigate('DeckView', { deckName })
+      this.setState({
+        error: false
+      })
+    }
+    else 
+      this.setState({
+        error: true
+      })
   }
 
   render() {
-    const { deckName } = this.state;
-
+    const { deckName, error } = this.state;
     return (
       <KeyboardAvoidingView behavior='padding'>
         <Text>Enter Your New Deck Name: </Text>
@@ -39,11 +49,11 @@ class NewDeck extends Component {
           value={deckName}
           onChangeText={this.updateInput}
         />
-        <TouchableOpacity
+        <StyleButton
           onPress={this.submitDeck}
-        >
-          <Text>Create Deck</Text>
-        </TouchableOpacity>
+          text='Create Deck'
+        />
+        { error && <Text>You have not entered a deck name yet.</Text> }
       </KeyboardAvoidingView>
     );
   }

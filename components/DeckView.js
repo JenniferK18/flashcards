@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Animated
 } from 'react-native'
+import StyleButton from './StyleButton'
 
 class DeckView extends Component {
 
@@ -42,16 +43,14 @@ class DeckView extends Component {
     return (
       <Animated.View style={{ opacity: fade }}>
         {cards && <Text>{deckName} - {cards.length} cards</Text>}
-        <TouchableOpacity
+        <StyleButton
           onPress={this.addQuestion}
-        >
-          <Text>Add Question</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          text='Add Question'
+        />
+        <StyleButton
           onPress={this.startQuiz}
-        >
-          <Text>Start Quiz</Text>
-        </TouchableOpacity>
+          text='Start Quiz'
+        />
         {error && <Text>You have not added any questions to this deck yet.</Text>}
       </Animated.View>
     )

@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux'
 import { clearLocalNotification, setLocalNotification } from '../utils'
 import Card from './Card'
+import StyleButton from './StyleButton'
 
 class QuizView extends Component {
 
@@ -62,16 +63,14 @@ class QuizView extends Component {
         : 
           <View>
             <Text>Score: {correctAnswers} / {cards.length} </Text>
-            <TouchableOpacity
+            <StyleButton
               onPress={this.restartQuiz}
-            >
-              <Text>Restart Quiz</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              text='Restart Quiz'
+            />
+            <StyleButton
               onPress={this.toDeckView}
-            >
-              <Text>Back to Deck</Text>
-            </TouchableOpacity>
+              text='Back to Deck'
+            />
           </View>
         }
       </View>

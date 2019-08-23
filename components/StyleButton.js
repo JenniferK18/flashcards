@@ -10,7 +10,7 @@ const StyleButton = ({
 }) => (
     <TouchableOpacity
         onPress={onPress}
-        style={style}
+        style={style.button}
     >
         <Text>{text}</Text>
     </TouchableOpacity>
@@ -20,7 +20,9 @@ const style = StyleSheet.create({
     button: {
       alignItems: 'center',
       backgroundColor: '#DDDDDD',
-      padding: 20
+      padding: 20,
+      borderStyle: 'solid',
+      borderWidth: 1,
     },
 })
 

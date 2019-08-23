@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import {
   View,
   Text,
-  TouchableOpacity
 } from 'react-native'
+import StyleButton from './StyleButton'
 
 class Card extends Component {
   state = {
@@ -51,29 +51,25 @@ class Card extends Component {
       <View>
         <Text>Question: {info.question}</Text>
         {!viewAnswer ? (
-          <TouchableOpacity
+          <StyleButton
             onPress={this.viewAnswer}
-          >
-            <Text>View Answer</Text>
-          </TouchableOpacity>
+            text='View Answer'
+          />
         ) : (
           <View>
             <Text>Answer: {info.answer}</Text>
-            <TouchableOpacity
+            <StyleButton
               onPress={() => this.markAnswer('correct')}
-            >
-              <Text>Correct</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              text='Correct'
+            />
+            <StyleButton
               onPress={() => this.markAnswer('incorrect')}
-            >
-              <Text>Incorrect</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              text='Incorrect'
+            />
+            <StyleButton
               onPress={nextQuestion}
-            >
-              <Text>Next Question</Text>
-            </TouchableOpacity>
+              text='Next Question'
+            />
             { markedError && <Text>You have already marked this question's answer.</Text> }
           </View>
         )}
